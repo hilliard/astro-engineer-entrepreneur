@@ -1,0 +1,28 @@
+---
+import Section from "../components/Section.astro";
+import Layout from "../layouts/Layout.astro";
+
+const title = "Contact";
+const email = "hilliards@gmail.com";
+---
+
+<Layout title="Contact">
+  <Section>
+    <h1>Contact</h1>
+    <p>You can contact me at <a href={`mailto:${email}`}>{email}.</a></p>
+    <img
+      src="/images/Me-In-Vancouver-Cartoonish-243.png"
+      alt="A portrait of the author"
+      class="profile-pic"
+    />
+  </Section>
+</Layout>
+
+<style>
+  .profile-pic {
+    border-radius: 50%;
+    width: 300px; /* Adjust size as needed */
+    height: 300px; /* Must match width */
+    object-fit: cover; /* Crops the image to fit center */
+  }
+</style>

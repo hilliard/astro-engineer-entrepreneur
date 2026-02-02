@@ -1,0 +1,84 @@
+import { defineCollection, z } from 'astro:content';
+import { file, glob } from "astro/loaders";
+
+const project = defineCollection({
+  loader: file('src/data/projects.json'),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    image: z.string(),
+    slug: z.string(),
+    liveSiteURL: z.string(),
+    githubURL: z.string()
+  })
+});
+
+export const collections = { project };
+
+---
+import Section from "./Section.astro";
+import SectionHeader from "./SectionHeader.astro"
+import { getCollection } from "astro:content";
+
+const projects = await getCollection('project');
+
+const heading = "My Projects";
+const cta = { text: 'View All', href: '/projects' };
+  ---
+<Section dark={true}>
+  <SectionHeader cta={cta} heading={heading}/>
+
+  <div class="projects-container">
+    {
+      projects.map(project => (
+        <div class="card">
+          <img src={project.data.image} alt={project.data.title}/>
+          <h3><a href={project.data.liveSiteURL}>{project.data.title}</a></h3>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+
+  .projects-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    
+    .card {
+      overflow: hidden;
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h3 {
+      margin-top: 20px;;
+    }
+      
+      a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight:  600;
+        font-size: 18px;
+      }
+      
+      @media (max-width: 700px) {
+        & {
+          grid-template-columns: 1fr;
+        }
+        
+      
+    }
+  }
+
+</style>
+
+
+ <!-- Updated Font Awesome to a newer version that includes the X icon -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+
+

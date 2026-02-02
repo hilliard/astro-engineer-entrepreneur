@@ -1,0 +1,53 @@
+---
+import Section from "./Section.astro";
+---
+
+<Section dark={true}>
+  <footer>
+    <div class="icons-container">
+      <!-- Add each icon for email, github, x and linkedin -->
+      <!-- Each should be an img tag wrapped in an anchor tag -->
+      <a href="#"><img src="/images/icons/email.svg" alt="Email icon" /></a>
+      <a href="#"><img src="/images/icons/github.svg" alt="GitHub icon" /></a>
+      <a href="#"
+        ><img src="/images/icons/linkedin.svg" alt="LinkedIn icon" /></a
+      >
+      <a href="#"><img src="/images/icons/x.svg" alt="Twitter icon" /></a>
+    </div>
+  </footer>
+  <p class="rights-text">
+    Copyright © 2026 GoldTending Inc. (Sonny) All rights reserved
+  </p>
+  <p class="credit-text">Images: Flaticon.com</p>
+</Section>
+
+<style>
+  footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .icons-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .credit-text {
+      color: var(--light);
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 500px) {
+      .icons-container {
+        flex-direction: column;
+        gap: 4px;
+        img {
+          height: 20px;
+        }
+      }
+    }
+  }
+</style>

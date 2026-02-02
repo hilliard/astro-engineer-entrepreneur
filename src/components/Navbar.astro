@@ -1,0 +1,115 @@
+---
+import Container from "./Container.astro";
+
+interface Props {
+  permissions?: string[];
+  isAuthenticated?: boolean;
+}
+
+const { permissions = [], isAuthenticated = false } = Astro.props as Props;
+const canCreateBlog = permissions.includes("blog.create");
+---
+
+<nav class="nav">
+  <Container>
+    <div class="nav-container">
+      <div>
+        <a href="/">
+          <img src="/images/SONNY.svg" alt="Logo" />
+        </a>
+      </div>
+      <ul class="nav-items">
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contact">Contact</a></li>
+        {
+          canCreateBlog && (
+            <li>
+              <a href="/add-blog">Add Blog</a>
+            </li>
+          )
+        }
+        {
+          isAuthenticated ? (
+            <li>
+              <button id="logoutBtn" class="auth-btn">
+                Logout
+              </button>
+            </li>
+          ) : (
+            <li>
+              <a href="/login">Login</a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+  </Container>
+</nav>
+
+<script>
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await fetch("http://localhost:3000/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        });
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Logout error:", error);
+      }
+    });
+  }
+</script>
+
+<style>
+  nav {
+    background: var(--secondary);
+
+    img {
+      height: 60px;
+    }
+
+    .nav-container {
+      display: flex;
+      padding: 24px 0;
+      justify-content: space-between;
+      align-items: center;
+
+      .nav-items {
+        list-style-type: none;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+
+        a {
+          text-decoration: none;
+          color: var(--dark);
+          font-size: 18px;
+        }
+
+        .auth-btn {
+          background: none;
+          border: none;
+          color: var(--dark);
+          font-size: 18px;
+          cursor: pointer;
+          font-family: inherit;
+        }
+
+        .auth-btn:hover {
+          opacity: 0.7;
+        }
+      }
+
+      @media screen and (max-width: 500px) {
+        & {
+          flex-direction: column;
+          gap: 16px;
+        }
+      }
+    }
+  }
+</style>

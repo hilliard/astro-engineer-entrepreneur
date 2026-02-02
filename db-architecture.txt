@@ -1,0 +1,40 @@
+#### Database Schema
+
+#### Current 
+
+- **products**: id, title, artist, price, image, year, genre, stock
+- **users**: id, name, email, username, password (bcrypt hashed)
+- **cart_items**: id, user_id, product_id, quantity
+
+#### Target (Human-Centric Design)
+
+- **humans**: Base entity for all people (id, first_name, last_name, dob, gender, phone)
+- **customers**: Role table (human_id, username, password_hash, loyalty_points)
+- **employees**: Role table (human_id, job_title, department, salary)
+- **artists**: Role table (human_id, stage_name, bio, website)
+- **email_history**: Temporal tracking (human_id, email, effective_from, effective_to)
+- **site_roles**: RBAC roles (id, role_name, description)
+- **permissions**: RBAC actions (id, permission_name, resource, action)
+- **human_site_roles**: Many-to-many user ↔ roles
+- **site_role_permissions**: Many-to-many role ↔ permissions
+- **cart_items**: Updated to reference human_id
+
+
+### Database Access
+
+Use `getDBConnection()` from [db/db.js](../db/db.js):
+
+```javascript concepts
+const db = await getDBConnection();
+const items = await db.all(query, params); // Multiple rows
+const item = await db.get(query, params); // Single row
+const result = await db.run(query, params); // INSERT/UPDATE (returns lastID)
+```
+
+### Authentication Flow
+
+1. **Login/Register** sets `req.session.userId` 
+2. **Protected routes** use `requireAuth` 
+3. **Frontend** checks auth via `/api/auth/me` endpoint 
+
+###

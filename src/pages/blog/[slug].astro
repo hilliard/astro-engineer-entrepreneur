@@ -1,0 +1,62 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/Section.astro";
+
+const { slug } = Astro.params;
+const toSlug = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const posts = await getCollection("blog");
+const post = posts.find((entry) => {
+  const entrySlug =
+    entry.slug ?? entry.id?.replace(/\.md$/, "") ?? toSlug(entry.data.title);
+  return entrySlug === slug;
+});
+
+if (!post) {
+  return Astro.redirect("/blog");
+}
+
+const { Content } = await render(post);
+---
+
+<Layout>
+  <Section>
+    <div class="post">
+      <img src={post.data.image} alt={post.data.title} class="post-image" />
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-date">{post.data.date}</p>
+      <Content />
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .post {
+    .post-image {
+      width: 100%;
+      object-fit: cover;
+      margin-bottom: 40px;
+      border-radius: 10px;
+    }
+
+    .post-title {
+      margin-bottom: 16px;
+    }
+
+    .post-date {
+      font-size: 20px;
+      color: var(--light);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      margin-top: 30px;
+    }
+  }
+</style>

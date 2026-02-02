@@ -1,0 +1,27 @@
+[
+  
+  {
+    "title": "Musicians E-commerce Site",
+    "slug": "project-1",
+    "description": "A fast, scalable site for managing products, orders, and sales analytics. Built with React, Next.js, Firebase, and TailwindCSS.",
+    "image": "/images/projects/project-1.png",
+    "githubURL": "https://github.com/hilliard/express-soul-provider",
+    "liveSiteURL": "https://github.com/hilliard/express-soul-provider"
+  },
+  {
+    "title": "Developer Portfolio Website",
+    "slug": "project-2",
+    "description": "A redesign of a Developer Portfolio landing page, improving UI/UX and performance. Built with Next.js, TailwindCSS, and TypeScript.",
+    "image": "/images/projects/project-2.png",
+    "githubURL": "https://github.com/hilliard",
+    "liveSiteURL": "https://hilliardportfolio.netlify.app/"
+  },
+  {
+    "title": "Shopping Cart Chrome Extension",
+    "slug": "project-3",
+    "description": "A Chrome DevTools extension for managing shopping cart state in e-commerce applications. Built with React, TypeScript, and Chrome Extension APIs.",
+    "image": "/images/projects/project-3.png",
+    "githubURL": "https://github.com/hilliard/fb-shoplist",
+    "liveSiteURL": "https://github.com/hilliard"
+  }
+]
